@@ -18,23 +18,23 @@ import lombok.ToString;
 @ToString
 @Table(name="veicoli")
 public class Veicoli {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "id") 
+	private Integer id; 
 	
 	@ManyToOne
 	@JoinColumn(
-				name="tipo_veicolo"
+			name="tipo_veicolo"
 			)
 	private TipoVeicolo tipoVeicolo;
-	
 	
 	@Column(
 			name="numero_ruote",
 			nullable=false
-		)
+			)
 	private Integer numeroRuote;
-	
 	
 	@ManyToOne
 	@JoinColumn(
@@ -71,4 +71,5 @@ public class Veicoli {
 			nullable = false
 			)
 	private String modello;
+	
 }
