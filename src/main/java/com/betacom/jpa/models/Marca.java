@@ -21,7 +21,8 @@ public class Marca {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Integer id_marca;
+	@Column(name = "id_marca")
+	private Integer id;
 	
 	@Column(
 			name="nome",

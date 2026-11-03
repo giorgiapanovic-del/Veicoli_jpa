@@ -21,7 +21,8 @@ public class TipoAlimentazione {
 	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Integer id_tipo_alimentazione;
+	@Column(name = "id_tipo_alimentazione")
+	private Integer id;
 	
 	@Column(
 			name="nome",

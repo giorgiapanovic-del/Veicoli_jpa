@@ -21,7 +21,8 @@ public class TipoSospensione {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	private Integer id_tipo_sospensione;
+	@Column(name = "id_tipo_sospensione")
+	private Integer id;
 	
 	@Column(
 			name="nome",
