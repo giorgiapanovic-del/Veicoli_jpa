@@ -10,7 +10,9 @@ import com.betacom.jpa.dto.output.BiciRes;
 import com.betacom.jpa.exception.VeicoloException;
 import com.betacom.jpa.mapper.BiciMap;
 import com.betacom.jpa.models.Bici;
+import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IBiciRepository;
+import com.betacom.jpa.repositories.IVeicoliRepository;
 import com.betacom.jpa.services.interfaces.IBiciService;
 import com.betacom.jpa.services.interfaces.INotificaService;
 
@@ -24,43 +26,51 @@ public class BiciImpl implements IBiciService{
 	
 	private final IBiciRepository biciRepository;
 	private final INotificaService notificaService;
+	private IVeicoliRepository veicoliRepository;
 	
 	@Transactional
-	@Override
-	public void createBici(BiciReq biciReq) throws Exception {
-		
-		log.debug("create ()", biciReq);
-//		if (biciRepository.existsByCodiceFiscale(biciReq.getCodiceFiscale()))
-//			throw new VeicoloException(notificaService.get("cffisc-fnd"));
-		
-		Bici bici = new Bici();
-		bici.setNumeroCorone(biciReq.getNumeroCorone());
-		bici.setNumeroMarce(biciReq.getNumeroMarce());
-		bici.setPieghevole(biciReq.getPieghevole());
-		bici.setTipoFreno(biciReq.getTipoFreno());
-//		bici.setTipoSospensione(biciReq.getTipoSospensione());
-//		bici.setVeicoli(biciReq.getVeicoli());
-		biciRepository.save(bici);
-		
-	}
+    @Override
+    public void createBici(BiciReq biciReq) throws Exception {
+
+        log.debug("create {}", biciReq);
+
+        Veicoli veicolo = veicoliRepository.findById(biciReq.getIdVeicolo())
+                .orElseThrow(() -> new VeicoloException(notificaService.get("bici-fnd")));
+
+        Bici bici = new Bici();
+
+        bici.setNumeroCorone(biciReq.getNumeroCorone());
+        bici.setNumeroMarce(biciReq.getNumeroMarce());
+        bici.setPieghevole(biciReq.getPieghevole());
+        bici.setTipoFreno(biciReq.getTipoFreno());
+        //bici.setTipoSospensione(biciReq.getTipoSospensione());
+        bici.setVeicoli(veicolo);
+
+        biciRepository.save(bici);
+    }
 
 	@Transactional
-	@Override
-	public void updateBici(BiciReq biciReq) throws Exception {
-		
-		log.debug("update {}", biciReq);
-//		Bici bici = biciRepository.findById(biciReq.getId());
-//				.orElseThrow(() -> new VeicoloException(msgS.get("bici-ntfnd")));			
-//		
-//		if (bici.getPieghevole() != null) bici.setPieghevole(biciReq.getPieghevole());
-//		if (bici.getNumeroCorone() != null) bici.setNumeroCorone(biciReq.getNumeroCorone());		
-//		if (bici.getNumeroMarce() != null) bici.setNumeroMarce(biciReq.getNumeroMarce());
-//		if (bici.getTipoFreno() != null) bici.setTipoFreno(biciReq.getTipoFreno());
-//		if (bici.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
-//		if (bici.getVeicoli() != null) bici.setVeicoli(biciReq.getVeicoli());
-//		biciRepository.save(bici);
-		
-	}
+    @Override
+    public void updateBici(BiciReq biciReq) throws Exception {
+
+        log.debug("update {}", biciReq);
+
+        Bici bici = biciRepository.findById(biciReq.getId())
+                .orElseThrow(() -> new VeicoloException(notificaService.get("bici-ntfnd")));
+
+        if (biciReq.getPieghevole() != null) bici.setPieghevole(biciReq.getPieghevole());
+        if (biciReq.getNumeroCorone() != null) bici.setNumeroCorone(biciReq.getNumeroCorone());
+        if (biciReq.getNumeroMarce() != null) bici.setNumeroMarce(biciReq.getNumeroMarce());
+        if (biciReq.getTipoFreno() != null) bici.setTipoFreno(biciReq.getTipoFreno());
+        //if (biciReq.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
+
+        if (biciReq.getIdVeicolo() != null) {
+            Veicoli veicolo = veicoliRepository.findById(biciReq.getIdVeicolo())
+                    .orElseThrow(() -> new VeicoloException(notificaService.get("bici-fnd")));
+            bici.setVeicoli(veicolo);
+        }
+        biciRepository.save(bici);
+    }
 
 	@Transactional
 	@Override
