@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.betacom.jpa.dto.input.BiciReq;
 import com.betacom.jpa.dto.output.BiciRes;
 import com.betacom.jpa.exception.VeicoloException;
+import com.betacom.jpa.mapper.BiciMap;
 import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.repositories.IBiciRepository;
 import com.betacom.jpa.services.interfaces.IBiciService;
@@ -29,17 +30,17 @@ public class BiciImpl implements IBiciService{
 	public void createBici(BiciReq biciReq) throws Exception {
 		
 		log.debug("create ()", biciReq);
-//		if (biciRepository.existsByCodiceFiscale(req.getCodiceFiscale()))
-//			throw new VeicoloException(msgS.get("cffisc-fnd"));
+//		if (biciRepository.existsByCodiceFiscale(biciReq.getCodiceFiscale()))
+//			throw new VeicoloException(notificaService.get("cffisc-fnd"));
 		
-//		Bici bici = new Bici();
-//		bici.setNumeroCorone(biciReq.getNumeroCorone());
-//		bici.setNumeroMarce(biciReq.getNumeroMarce());
-//		bici.setPieghevole(biciReq.getPieghevole());
-//		bici.setTipoFreno(biciReq.getTipoFreno());
+		Bici bici = new Bici();
+		bici.setNumeroCorone(biciReq.getNumeroCorone());
+		bici.setNumeroMarce(biciReq.getNumeroMarce());
+		bici.setPieghevole(biciReq.getPieghevole());
+		bici.setTipoFreno(biciReq.getTipoFreno());
 //		bici.setTipoSospensione(biciReq.getTipoSospensione());
 //		bici.setVeicoli(biciReq.getVeicoli());
-//		biciRepository.save(bici);
+		biciRepository.save(bici);
 		
 	}
 
@@ -50,7 +51,7 @@ public class BiciImpl implements IBiciService{
 		log.debug("update {}", biciReq);
 //		Bici bici = biciRepository.findById(biciReq.getId());
 //				.orElseThrow(() -> new VeicoloException(msgS.get("bici-ntfnd")));			
-		
+//		
 //		if (bici.getPieghevole() != null) bici.setPieghevole(biciReq.getPieghevole());
 //		if (bici.getNumeroCorone() != null) bici.setNumeroCorone(biciReq.getNumeroCorone());		
 //		if (bici.getNumeroMarce() != null) bici.setNumeroMarce(biciReq.getNumeroMarce());
@@ -58,7 +59,7 @@ public class BiciImpl implements IBiciService{
 //		if (bici.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
 //		if (bici.getVeicoli() != null) bici.setVeicoli(biciReq.getVeicoli());
 //		biciRepository.save(bici);
-//		
+		
 	}
 
 	@Transactional
@@ -74,9 +75,8 @@ public class BiciImpl implements IBiciService{
 
 	@Override
 	public List<BiciRes> listBici() throws Exception {
-//		List<Bici> listBici = biciRepository.findAll();
-//		return BiciMap.buildBiciDTO(listBici);
-		return null;
+		List<Bici> listBici = biciRepository.findAll();
+		return BiciMap.buildBiciResList(listBici);		
 	}
 
 }

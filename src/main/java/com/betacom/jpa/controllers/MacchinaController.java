@@ -55,11 +55,11 @@ public class MacchinaController {
         ResponseRes response = new ResponseRes();
         try {
             macchinaService.createMacchina(request);
-            response.setResult(true);
+      //      response.setResult(true);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             log.error("Errore durante la creazione della macchina: {}", e.getMessage());
-            response.setResult(false);
+      //      response.setResult(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
@@ -70,11 +70,11 @@ public class MacchinaController {
         ResponseRes response = new ResponseRes();
         try {
             macchinaService.updateMacchina(request);
-            response.setResult(true);
+       //     response.setResult(true);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Errore durante l'aggiornamento della macchina: {}", e.getMessage());
-            response.setResult(false);
+       //     response.setResult(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
@@ -85,11 +85,11 @@ public class MacchinaController {
         ResponseRes response = new ResponseRes();
         try {
             macchinaService.deleteMacchina(id);
-            response.setResult(true);
+       //     response.setResult(true);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             log.error("Errore durante l'eliminazione della macchina con ID {}: {}", id, e.getMessage());
-            response.setResult(false);
+       //     response.setResult(false);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }

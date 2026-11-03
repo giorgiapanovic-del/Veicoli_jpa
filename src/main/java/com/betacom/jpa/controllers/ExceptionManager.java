@@ -5,6 +5,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.betacom.jpa.dto.output.ResponseRes;
 import com.betacom.jpa.services.interfaces.INotificaService;
 
 import lombok.RequiredArgsConstructor;

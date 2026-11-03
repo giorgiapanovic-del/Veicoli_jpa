@@ -36,21 +36,22 @@ public class MacchinaImpl implements IMacchinaService {
 
     
     public MacchinaRes getMacchinaById(Integer id) throws VeicoloException {
-        Macchina macchina = macchinaRepository.findById(id)
-                .orElseThrow(() -> new VeicoloException("Macchina non trovata con ID: " + id));
-        
-        return MacchinaMap.toMacchinaRes(macchina);
+//        Macchina macchina = macchinaRepository.findById(id)
+//                .orElseThrow(() -> new VeicoloException("Macchina non trovata con ID: " + id));
+//        
+//        return MacchinaMap.toMacchinaRes(macchina);
+    	return null;
     }
 
     public void createMacchina(MacchinaReq request) throws VeicoloException {
-        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
-                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
+//        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
+//                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
 
         Macchina macchina = new Macchina();
         macchina.setTarga(request.getTarga());
         macchina.setCc(request.getCc());
         macchina.setNumeroPorte(request.getNumeroPorte());
-        macchina.setVeicoli(veicolo);
+//        macchina.setVeicoli(veicolo);
 
         macchinaRepository.save(macchina);
     }
@@ -64,13 +65,13 @@ public class MacchinaImpl implements IMacchinaService {
         Macchina macchina = macchinaRepository.findById(request.getId())
                 .orElseThrow(() -> new VeicoloException("Macchina non trovata per l'aggiornamento"));
 
-        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
-                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
+//        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
+//                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
 
         macchina.setTarga(request.getTarga());
         macchina.setCc(request.getCc());
         macchina.setNumeroPorte(request.getNumeroPorte());
-        macchina.setVeicoli(veicolo);
+//        macchina.setVeicoli(veicolo);
 
         macchinaRepository.save(macchina);
     }
