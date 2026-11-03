@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TipoAlimentazioneRes {
 
-	private Integer id_tipo_alimentazione;
+	private Integer id;
     private String nome;
     private List<VeicoliRes> veicoli;
 }

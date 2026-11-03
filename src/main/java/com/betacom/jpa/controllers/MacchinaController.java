@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dto.input.MacchinaReq;
 import com.betacom.jpa.dto.output.MacchinaRes;
-import com.betacom.jpa.dto.output.ResponseRes;
+import com.betacom.jpa.dto.output.ResponseRes; // <-- Import corretto
 import com.betacom.jpa.services.interfaces.IMacchinaService;
 
 import jakarta.validation.Valid;
@@ -31,66 +31,61 @@ public class MacchinaController {
     private final IMacchinaService macchinaService;
     
     @GetMapping("/get-all")
-    public ResponseEntity<List<MacchinaRes>> getAll() {
+    public ResponseEntity<List<MacchinaRes>> getAll() throws Exception {
         log.info("Richiesta ricezione di tutte le macchine");
         List<MacchinaRes> list = macchinaService.getAllMacchine();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<MacchinaRes> getById(@PathVariable Integer id) {
+    public ResponseEntity<MacchinaRes> getById(@PathVariable Integer id) throws Exception {
         log.info("Richiesta ricezione macchina con ID: {}", id);
-        try {
-            MacchinaRes res = macchinaService.getMacchinaById(id);
-            return ResponseEntity.ok(res);
-        } catch (Exception e) {
-            log.error("Errore durante la ricerca della macchina con ID {}: {}", id, e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        MacchinaRes res = macchinaService.getMacchinaById(id);
+        return ResponseEntity.ok(res);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseRes> create(@Valid @RequestBody MacchinaReq request) {
-        log.info("Richiesta creazione nuova macchina con targa: {}", request.getTarga());
-        ResponseRes response = new ResponseRes();
-        try {
-            macchinaService.createMacchina(request);
-      //      response.setResult(true);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (Exception e) {
-            log.error("Errore durante la creazione della macchina: {}", e.getMessage());
-      //      response.setResult(false);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
+    public ResponseEntity<ResponseRes> create(
+            @Valid @RequestBody MacchinaReq request) throws Exception {
+
+        log.info("Creazione macchina con targa: {}", request.getTarga());
+
+        macchinaService.createMacchina(request);
+
+        ResponseRes response = ResponseRes.builder()
+                .msg("Macchina creata correttamente")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<ResponseRes> update(@Valid @RequestBody MacchinaReq request) {
-        log.info("Richiesta aggiornamento macchina con ID: {}", request.getId());
-        ResponseRes response = new ResponseRes();
-        try {
-            macchinaService.updateMacchina(request);
-       //     response.setResult(true);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Errore durante l'aggiornamento della macchina: {}", e.getMessage());
-       //     response.setResult(false);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
+    public ResponseEntity<ResponseRes> update(
+            @Valid @RequestBody MacchinaReq request) throws Exception {
+
+        log.info("Aggiornamento macchina con ID: {}", request.getId());
+
+        macchinaService.updateMacchina(request);
+
+        ResponseRes response = ResponseRes.builder()
+                .msg("Macchina aggiornata correttamente")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ResponseRes> delete(@PathVariable Integer id) {
-        log.info("Richiesta eliminazione macchina con ID: {}", id);
-        ResponseRes response = new ResponseRes();
-        try {
-            macchinaService.deleteMacchina(id);
-       //     response.setResult(true);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Errore durante l'eliminazione della macchina con ID {}: {}", id, e.getMessage());
-       //     response.setResult(false);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
+    public ResponseEntity<ResponseRes> delete(
+            @PathVariable Integer id) throws Exception {
+
+        log.info("Eliminazione macchina con ID: {}", id);
+
+        macchinaService.deleteMacchina(id);
+
+        ResponseRes response = ResponseRes.builder()
+                .msg("Macchina eliminata correttamente")
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 }
