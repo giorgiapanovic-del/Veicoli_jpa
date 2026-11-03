@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ColoreRes {
 	
-	private Integer id_colore;
+	private Integer id;
 	private String nome;
 	private List<VeicoliRes> veicoli;
 }
