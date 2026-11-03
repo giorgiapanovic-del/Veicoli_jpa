@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dto.input.MotoReq;
+import com.betacom.jpa.dto.input.ValidationGroup;
+import com.betacom.jpa.dto.output.ResponseRes;
 import com.betacom.jpa.services.interfaces.IMotoService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,39 +28,39 @@ public class MotoController {
 
 private final IMotoService motoService;
 	
-//	@GetMapping("/list")
-//	public ResponseEntity<Object> listMoto(	) throws Exception {
-//		return ResponseEntity.ok(motoService.listMoto());
-//	}
-//
-//	@PostMapping("/create")
-//	public ResponseEntity<ResponseDTO> createMoto(
-//						@Validated(ValidationGroup.Create.class)
-//						@RequestBody MotoReq motoReq) throws Exception {
-//		motoService.createMoto(motoReq);
-//		return ResponseEntity.ok(ResponseDTO.builder()
-//				.msg("create sucessfull")
-//				.build()
-//				);
-//	}
-//	
-//	@PatchMapping("/update")
-//	public ResponseEntity<ResponseDTO> updateMoto(
-//						@Validated(ValidationGroup.Update.class)
-//						@RequestBody MotoReq motoReq) throws Exception {
-//			motoService.updateMoto(motoReq);
-//			return ResponseEntity.ok(ResponseDTO.builder()
-//					.msg("update sucessfull")
-//					.build()
-//					);
-//	}
-//	
-//	@DeleteMapping("/delete/{id}")
-//	public ResponseEntity<ResponseDTO> deleteMoto(@PathVariable Integer id) throws Exception {
-//		motoService.deleteMoto(id);
-//		return ResponseEntity.ok(ResponseDTO.builder()
-//				.msg("delete sucessfull")
-//				.build()
-//				);
-//	}
+	@GetMapping("/list")
+	public ResponseEntity<Object> listMoto(	) throws Exception {
+		return ResponseEntity.ok(motoService.listMoto());
+	}
+
+	@PostMapping("/create")
+	public ResponseEntity<ResponseRes> createMoto(
+						@Validated(ValidationGroup.Create.class)
+						@RequestBody MotoReq motoReq) throws Exception {
+		motoService.createMoto(motoReq);
+		return ResponseEntity.ok(ResponseRes.builder()
+				.msg("create sucessfull")
+				.build()
+				);
+	}
+	
+	@PatchMapping("/update")
+	public ResponseEntity<ResponseRes> updateMoto(
+						@Validated(ValidationGroup.Update.class)
+						@RequestBody MotoReq motoReq) throws Exception {
+			motoService.updateMoto(motoReq);
+			return ResponseEntity.ok(ResponseRes.builder()
+					.msg("update sucessfull")
+					.build()
+					);
+	}
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<ResponseRes> deleteMoto(@PathVariable Integer id) throws Exception {
+		motoService.deleteMoto(id);
+		return ResponseEntity.ok(ResponseRes.builder()
+				.msg("delete sucessfull")
+				.build()
+				);
+	}
 }
