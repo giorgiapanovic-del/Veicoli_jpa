@@ -1,8 +1,8 @@
 
     create table bici (
-    	id_veicoli integer not null,
         id_bici integer not null auto_increment,
         id_tipo_sospensione integer,
+        id_veicoli integer not null,
         numero_corone integer not null,
         numero_marce integer not null,
         pieghevole bit not null,
@@ -23,9 +23,9 @@
     ) engine=InnoDB;
 
     create table macchina (
-    	id_veicoli integer not null,
-    	id_macchina integer not null auto_increment,
         cc integer not null,
+        id_macchina integer not null auto_increment,
+        id_veicoli integer not null,
         numero_porte integer not null,
         targa varchar(255) not null,
         primary key (id_macchina)
@@ -38,9 +38,9 @@
     ) engine=InnoDB;
 
     create table moto (
-    	id_veicoli integer not null,
-    	id_moto integer not null auto_increment,
         cc integer not null,
+        id_moto integer not null auto_increment,
+        id_veicoli integer not null,
         targa varchar(255) not null,
         primary key (id_moto)
     ) engine=InnoDB;
@@ -71,15 +71,15 @@
     ) engine=InnoDB;
 
     create table veicoli (
-    	id integer not null auto_increment,
-    	categoria integer,
-    	marca integer,
-    	modello varchar(255) not null,
-    	colore integer,
         anno_produzione integer not null,
+        categoria integer,
+        colore integer,
+        id integer not null auto_increment,
+        marca integer,
         numero_ruote integer not null,
         tipo_alimentazione integer,
         tipo_veicolo integer,
+        modello varchar(255) not null,
         primary key (id)
     ) engine=InnoDB;
 

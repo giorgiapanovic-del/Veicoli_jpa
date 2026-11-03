@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MarcaRes {
 
-	private Integer id_marca;
+	private Integer id;
     private String nome;
     private List<VeicoliRes> veicoli;
 }

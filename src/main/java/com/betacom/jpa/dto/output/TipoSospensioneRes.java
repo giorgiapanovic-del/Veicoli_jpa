@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TipoSospensioneRes {
 
-	private Integer id_tipo_sospensione;
+	private Integer id;
     private String nome;
     private List<BiciRes> veicoli;
 }
