@@ -14,26 +14,26 @@ import lombok.ToString;
 @ToString
 public class BiciReq extends VeicoliReq{
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id bici")
+	@NotNull(groups = ValidationGroup.Update.class, message = "bici-no-id")
     private Integer id;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "Manca id veicolo")
+	@NotNull(groups = ValidationGroup.Create.class, message = "veicolo-no-id")
     private Integer idVeicolo;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "Manca il numero corone")
-    @Positive(message = "numero di corone non valido")
+	@NotNull(groups = ValidationGroup.Create.class, message = "numc-ntfnd")
+    @Positive(message = "numc-invalid")
     private Integer numeroCorone;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "Manca il numero di marce")
-    @Positive(message = "numero di marce non valido")
+	@NotNull(groups = ValidationGroup.Create.class, message = "marce-no-num")
+    @Positive(message = "marcenum-invalid")
     private Integer numeroMarce;
 
-	@NotBlank(groups = ValidationGroup.Create.class, message = "Il tipo di freno è obbligatorio")
+	@NotBlank(groups = ValidationGroup.Create.class, message = "frenot-ntfnd")
     private String tipoFreno;
 
-	@NotBlank(groups = ValidationGroup.Create.class, message = "Il tipo di sospensione è obbligatorio")
+	@NotBlank(groups = ValidationGroup.Create.class, message = "sosp-ntfnd")
     private TipoSospensione tipoSospensione;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "Il campo 'pieghevole' è obbligatorio")
+	@NotNull(groups = ValidationGroup.Create.class, message = "Manca il campo pieghevole")
     private Boolean pieghevole;
 }
