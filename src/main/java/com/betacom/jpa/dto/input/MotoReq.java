@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MotoReq {
+public class MotoReq extends VeicoliReq{
 
 	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id della moto")
     private Integer id;

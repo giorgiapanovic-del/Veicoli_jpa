@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BiciReq {
+public class BiciReq extends VeicoliReq{
 
 	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id bici")
     private Integer id;

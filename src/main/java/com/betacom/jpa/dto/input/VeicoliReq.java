@@ -38,6 +38,7 @@ public class VeicoliReq {
     @Positive(message = "L'anno di produzione non è valido")
     private Integer annoProduzione;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca il modello")
+    @NotNull (groups = ValidationGroup.Create.class , message ="model_invalid")
+	@NotBlank (groups = ValidationGroup.Create.class , message ="model_invalid")
     private String modello;
 }

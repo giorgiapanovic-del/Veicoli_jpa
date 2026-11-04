@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MacchinaReq {
+public class MacchinaReq extends VeicoliReq{
     
 	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id macchina")
     private Integer id;
