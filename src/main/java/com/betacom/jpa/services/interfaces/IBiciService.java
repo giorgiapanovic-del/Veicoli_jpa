@@ -16,4 +16,7 @@ public interface IBiciService {
 	BiciRes findById(Integer id) throws Exception;
 	
 	List<BiciRes> listBici() throws Exception;
+	
+	List<BiciRes> listFiltri(Integer id, Integer numeroCorone, Integer numeroMarce, String tipoFreno, Integer idTipoSospensione, Boolean pieghevole) throws Exception;
+
 }

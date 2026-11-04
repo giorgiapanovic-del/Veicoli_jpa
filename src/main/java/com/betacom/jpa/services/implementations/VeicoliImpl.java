@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.betacom.jpa.dto.input.VeicoliReq;
 import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
+import com.betacom.jpa.mapper.MotoMap;
 import com.betacom.jpa.mapper.VeicoliMap;
+import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.ICategoriaRepository;
 import com.betacom.jpa.repositories.IColoreRepository;
@@ -144,5 +146,14 @@ public class VeicoliImpl implements IVeicoliService {
 				.orElseThrow(() -> new VeicoloException("veicolo-non-trovato"));
 		
 		return VeicoliMap.buildVeicoliRes(veicolo);
+	}
+
+	@Override
+	public List<VeicoliRes> listFiltri(Integer id, Integer idTipoVeicolo, Integer numeroRuote,
+			String idTipoAlimentazione, String idCategoria, Integer idColore, Integer idMarca, Integer annoProduzione,
+			String modello) throws Exception {
+		log.debug("list :{} / {} / {} / {}",  id,  idTipoVeicolo,  numeroRuote,  idTipoAlimentazione,  idCategoria,  idColore,  idMarca,  annoProduzione,  modello);
+		List<Veicoli> lS = veicoliRepository.searchByFilter(id,  idTipoVeicolo,  numeroRuote,  idTipoAlimentazione,  idCategoria,  idColore,  idMarca,  annoProduzione,  modello);
+		return VeicoliMap.buildVeicoliResList(lS);
 	}
 }

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.betacom.jpa.dto.input.MacchinaReq;
 import com.betacom.jpa.dto.output.MacchinaRes;
 import com.betacom.jpa.exception.VeicoloException;
+import com.betacom.jpa.mapper.BiciMap;
 import com.betacom.jpa.mapper.MacchinaMap;
+import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Macchina;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IMacchinaRepository;
@@ -98,5 +100,13 @@ public class MacchinaImpl implements IMacchinaService {
 	            .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
 
 	    return MacchinaMap.buildMacchinaRes(macchina);
+	}
+
+	@Override
+	public List<MacchinaRes> listFiltri(Integer id, String targa, Integer cc, Integer numeroPorte)
+			throws Exception {
+		log.debug("list :{} / {} / {} / {}", id, targa, cc, numeroPorte);
+		List<Macchina> lS = macchinaRepository.searchByFilter(id, targa, cc, numeroPorte);
+		return MacchinaMap.buildMacchinaResList(lS);
 	}
 }

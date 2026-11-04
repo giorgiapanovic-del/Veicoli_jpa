@@ -8,9 +8,11 @@ import com.betacom.jpa.dto.input.MotoReq;
 import com.betacom.jpa.dto.output.MotoRes;
 import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
+import com.betacom.jpa.mapper.MacchinaMap;
 import com.betacom.jpa.mapper.MotoMap;
 import com.betacom.jpa.mapper.VeicoliMap;
 import com.betacom.jpa.models.Bici;
+import com.betacom.jpa.models.Macchina;
 import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IBiciRepository;
@@ -92,6 +94,14 @@ public class MotoImpl implements IMotoService{
 				.orElseThrow(() -> new VeicoloException("moto-ntfnd"));
 		
 		return MotoMap.buildMotoRes(moto);
+	}
+
+	@Override
+	public List<MotoRes> listFiltri(Integer id, String targa, Integer cc) throws Exception {
+		log.debug("list :{} / {} / {} / {}", id, targa, cc);
+		List<Moto> lS = motoRepository.searchByFilter(id, targa, cc);
+		return MotoMap.buildMotoResList(lS);
+
 	}
 
 }

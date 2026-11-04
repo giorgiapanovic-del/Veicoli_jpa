@@ -101,4 +101,12 @@ public class BiciImpl implements IBiciService{
 		return BiciMap.buildBiciRes(bici);
 	}
 
+	@Override
+	public List<BiciRes> listFiltri(Integer id, Integer numeroCorone, Integer numeroMarce, String tipoFreno,
+			Integer idTipoSospensione, Boolean pieghevole) throws Exception {
+		log.debug("list :{} / {} / {} / {}", id, numeroCorone, numeroMarce, tipoFreno, idTipoSospensione, pieghevole);
+		List<Bici> lS = biciRepository.searchByFilter(id, numeroCorone, numeroMarce, tipoFreno, idTipoSospensione, pieghevole);
+		return BiciMap.buildBiciResList(lS);
+	}
+
 }
