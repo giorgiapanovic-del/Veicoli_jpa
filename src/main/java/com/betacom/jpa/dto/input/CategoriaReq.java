@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class CategoriaReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id della categoria")
+	@NotNull(groups = ValidationGroup.Update.class, message = "no-id-cat")
     private Integer id;
 
-	@NotBlank(groups = ValidationGroup.Create.class, message = "Manca il nome")
+	@NotBlank(groups = ValidationGroup.Create.class, message = "cat-no-name")
     private String nome;
 }

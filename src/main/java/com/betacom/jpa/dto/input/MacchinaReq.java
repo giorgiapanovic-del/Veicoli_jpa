@@ -10,20 +10,20 @@ import lombok.Setter;
 @Setter
 public class MacchinaReq extends VeicoliReq{
     
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id macchina")
+	@NotNull(groups = ValidationGroup.Update.class, message = "macc-no-id")
     private Integer id;
 
-    @NotNull(groups = ValidationGroup.Create.class, message = "Manca id veicolo")
+    @NotNull(groups = ValidationGroup.Create.class, message = "veic-no-id")
     private Integer idVeicoli;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "La targa è obbligatoria")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "tar-ntfnd")
     private String targa;
 
-    @NotNull(groups = ValidationGroup.Create.class, message = "Manca la cilindrata")
-    @Positive(message = "La cilindrata non è valida")
+    @NotNull(groups = ValidationGroup.Create.class, message = "cil-ntfnd")
+    @Positive(message = "cil-invalid")
     private Integer cc;
 
-    @NotNull(groups = ValidationGroup.Create.class, message = "Manca il numero di porte")
-    @Positive(message = "Il numero di porte non è valido")
+    @NotNull(groups = ValidationGroup.Create.class, message = "numpr-ntfnd")
+    @Positive(message = "numpr-invalid")
     private Integer numeroPorte;
 }
