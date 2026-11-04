@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dto.input.MacchinaReq;
@@ -30,6 +31,15 @@ import lombok.extern.slf4j.Slf4j;
 public class MacchinaController {
 
     private final IMacchinaService macchinaService;
+    
+    @GetMapping("/listFiltri")
+	public ResponseEntity<Object> list(@RequestParam (required = false)  Integer id,
+			@RequestParam (required = false)  String targa,
+			@RequestParam (required = false)  Integer cc,
+			@RequestParam (required = false)  Integer numeroPorte 
+			) throws Exception{
+		return ResponseEntity.ok(macchinaService.listFiltri(id, targa, cc, numeroPorte));
+	}
     
     @GetMapping("/list")
     public ResponseEntity<List<MacchinaRes>> getAll() throws Exception {

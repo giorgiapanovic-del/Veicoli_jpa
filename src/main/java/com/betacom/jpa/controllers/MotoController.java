@@ -27,6 +27,14 @@ import lombok.extern.slf4j.Slf4j;
 public class MotoController {
 
 private final IMotoService motoService;
+
+	@GetMapping("/listFiltri")
+	public ResponseEntity<Object> list(@RequestParam (required = false)  Integer id,
+			@RequestParam (required = false)  String targa,
+			@RequestParam (required = false)  Integer cc
+			) throws Exception{
+		return ResponseEntity.ok(motoService.listFiltri(id, targa, cc));
+	}
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> listMoto(	) throws Exception {

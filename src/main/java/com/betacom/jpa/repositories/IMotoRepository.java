@@ -1,9 +1,19 @@
 package com.betacom.jpa.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.betacom.jpa.models.Moto;
 
 public interface IMotoRepository  extends JpaRepository<Moto, Integer>{
-
+	
+	@Query (name ="moto.selectByFilter")
+	List<Moto> searchByFilter(
+			@Param("id") Integer id,
+	        @Param("targa") String targa,
+	        @Param("cc") Integer cc
+			);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.betacom.jpa.dto.input.ValidationGroup;
@@ -28,6 +29,20 @@ public class VeicoliController {
 	
 	@Autowired
 	private IVeicoliService veicoliService;
+	
+    @GetMapping("/listFiltri")
+	public ResponseEntity<Object> list(@RequestParam (required = false)  Integer id,
+			@RequestParam (required = false)  Integer idTipoVeicolo,
+			@RequestParam (required = false)  Integer numeroRuote,
+			@RequestParam (required = false)  String idTipoAlimentazione,
+			@RequestParam (required = false)  String idCategoria,
+			@RequestParam (required = false)  Integer idColore,
+			@RequestParam (required = false)  Integer idMarca,
+			@RequestParam (required = false)  Integer annoProduzione,
+			@RequestParam (required = false)  String modello
+			) throws Exception{
+		return ResponseEntity.ok(veicoliService.listFiltri(id, idTipoVeicolo,  numeroRuote,  idTipoAlimentazione,  idCategoria,  idColore,  idMarca,  annoProduzione,  modello));
+	}
 	
 	@GetMapping("/list")
 	public ResponseEntity<Object> listVeicoli() throws Exception {
