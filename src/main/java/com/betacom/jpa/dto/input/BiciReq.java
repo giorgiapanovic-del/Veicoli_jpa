@@ -1,5 +1,7 @@
 package com.betacom.jpa.dto.input;
 
+import com.betacom.jpa.models.TipoSospensione;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -30,7 +32,7 @@ public class BiciReq {
     private String tipoFreno;
 
 	@NotBlank(groups = ValidationGroup.Create.class, message = "Il tipo di sospensione è obbligatorio")
-    private String tipoSospensione;
+    private TipoSospensione tipoSospensione;
 
 	@NotNull(groups = ValidationGroup.Create.class, message = "Il campo 'pieghevole' è obbligatorio")
     private Boolean pieghevole;

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,10 +31,10 @@ public class MacchinaController {
 
     private final IMacchinaService macchinaService;
     
-    @GetMapping("/get-all")
+    @GetMapping("/list")
     public ResponseEntity<List<MacchinaRes>> getAll() throws Exception {
         log.info("Richiesta ricezione di tutte le macchine");
-        List<MacchinaRes> list = macchinaService.getAllMacchine();
+        List<MacchinaRes> list = macchinaService.listMacchina();
         return ResponseEntity.ok(list);
     }
 
@@ -59,7 +60,7 @@ public class MacchinaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/update")
+    @PatchMapping("/update")
     public ResponseEntity<ResponseRes> update(
             @Valid @RequestBody MacchinaReq request) throws Exception {
 

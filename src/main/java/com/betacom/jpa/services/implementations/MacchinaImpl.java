@@ -1,9 +1,7 @@
 package com.betacom.jpa.services.implementations;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dto.input.MacchinaReq;
@@ -15,72 +13,90 @@ import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IMacchinaRepository;
 import com.betacom.jpa.repositories.IVeicoliRepository;
 import com.betacom.jpa.services.interfaces.IMacchinaService;
+import com.betacom.jpa.services.interfaces.INotificaService;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@RequiredArgsConstructor
+@Slf4j
 @Service
 public class MacchinaImpl implements IMacchinaService {
 
-    @Autowired
-    private IMacchinaRepository macchinaRepository;
+    private final IMacchinaRepository macchinaRepository;
+    private final IVeicoliRepository veicoliRepository;
+    private final INotificaService notificaService;
 
-    @Autowired
-    private IVeicoliRepository veicoliRepository;
+    @Transactional
+    @Override
+    public void createMacchina(MacchinaReq macchinaReq) throws Exception {
 
-    
-    public List<MacchinaRes> getAllMacchine() {
-        List<Macchina> macchine = macchinaRepository.findAll();
-        // Sfruttiamo il mapper pulito fuori dall'implementazione
-        return macchine.stream()
-                .map(MacchinaMap::toMacchinaRes)
-                .collect(Collectors.toList());
-    }
+        log.debug("create {}", macchinaReq);
 
-    
-    public MacchinaRes getMacchinaById(Integer id) throws VeicoloException {
-//        Macchina macchina = macchinaRepository.findById(id)
-//                .orElseThrow(() -> new VeicoloException("Macchina non trovata con ID: " + id));
-//        
-//        return MacchinaMap.toMacchinaRes(macchina);
-    	return null;
-    }
-
-    public void createMacchina(MacchinaReq request) throws VeicoloException {
-//        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
-//                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
+        Veicoli veicolo = veicoliRepository.findById(macchinaReq.getIdVeicoli())
+                .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-fnd")));
 
         Macchina macchina = new Macchina();
-        macchina.setTarga(request.getTarga());
-        macchina.setCc(request.getCc());
-        macchina.setNumeroPorte(request.getNumeroPorte());
-//        macchina.setVeicoli(veicolo);
+
+        macchina.setTarga(macchinaReq.getTarga());
+        macchina.setCc(macchinaReq.getCc());
+        macchina.setNumeroPorte(macchinaReq.getNumeroPorte());
+        macchina.setVeicoli(veicolo);
 
         macchinaRepository.save(macchina);
     }
 
-    
-    public void updateMacchina(MacchinaReq request) throws VeicoloException {
-        if (request.getId() == null) {
-            throw new VeicoloException("L'ID della macchina è obbligatorio per l'aggiornamento");
+    @Transactional
+    @Override
+    public void updateMacchina(MacchinaReq macchinaReq) throws Exception {
+
+        log.debug("update {}", macchinaReq);
+
+        Macchina macchina = macchinaRepository.findById(macchinaReq.getId())
+                .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
+
+        if (macchinaReq.getTarga() != null) macchina.setTarga(macchinaReq.getTarga());
+        if (macchinaReq.getCc() != null) macchina.setCc(macchinaReq.getCc());
+        if (macchinaReq.getNumeroPorte() != null) macchina.setNumeroPorte(macchinaReq.getNumeroPorte());
+
+        if (macchinaReq.getIdVeicoli() != null) {
+            Veicoli veicolo = veicoliRepository.findById(macchinaReq.getIdVeicoli())
+                    .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-fnd")));
+
+            macchina.setVeicoli(veicolo);
         }
-        
-        Macchina macchina = macchinaRepository.findById(request.getId())
-                .orElseThrow(() -> new VeicoloException("Macchina non trovata per l'aggiornamento"));
-
-//        Veicoli veicolo = veicoliRepository.findById(request.getIdVeicoli())
-//                .orElseThrow(() -> new VeicoloException("Veicolo padre non trovato con ID: " + request.getIdVeicoli()));
-
-        macchina.setTarga(request.getTarga());
-        macchina.setCc(request.getCc());
-        macchina.setNumeroPorte(request.getNumeroPorte());
-//        macchina.setVeicoli(veicolo);
 
         macchinaRepository.save(macchina);
     }
 
-    
-    public void deleteMacchina(Integer id) throws VeicoloException {
-        if (!macchinaRepository.existsById(id)) {
-            throw new VeicoloException("Impossibile eliminare: Macchina non trovata con ID: " + id);
-        }
-        macchinaRepository.deleteById(id);
+    @Transactional
+    @Override
+    public void deleteMacchina(Integer macchinaID) throws Exception {
+
+        log.debug("delete {}", macchinaID);
+
+        Macchina macchina = macchinaRepository.findById(macchinaID)
+                .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
+
+        macchinaRepository.delete(macchina);
     }
+
+    @Override
+    public List<MacchinaRes> listMacchina() throws Exception {
+
+        List<Macchina> listMacchina = macchinaRepository.findAll();
+        return MacchinaMap.buildMacchinaResList(listMacchina);
+    }
+
+
+	@Override
+	public MacchinaRes getMacchinaById(Integer id) throws VeicoloException {
+		log.debug("getMacchinaById () - id: {}", id);
+
+	    Macchina macchina = macchinaRepository.findById(id)
+	            .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
+
+	    return MacchinaMap.buildMacchinaRes(macchina);
+	}
 }

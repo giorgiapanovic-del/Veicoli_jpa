@@ -63,4 +63,9 @@ public class BiciController {
 				.build()
 				);
 	}
+	
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Object> findById(@PathVariable Integer id) throws Exception {
+		return ResponseEntity.ok(biciService.findById(id));
+	}
 }

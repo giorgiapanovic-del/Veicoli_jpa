@@ -63,4 +63,9 @@ private final IMotoService motoService;
 				.build()
 				);
 	}
+	
+	@GetMapping("/get/{id}")
+	public ResponseEntity<Object> findById(@PathVariable Integer id) throws Exception {
+		return ResponseEntity.ok(motoService.findById(id));
+	}
 }

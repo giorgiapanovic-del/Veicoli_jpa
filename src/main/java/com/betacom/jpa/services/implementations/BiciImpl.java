@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.betacom.jpa.dto.input.BiciReq;
 import com.betacom.jpa.dto.output.BiciRes;
+import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
 import com.betacom.jpa.mapper.BiciMap;
+import com.betacom.jpa.mapper.VeicoliMap;
 import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IBiciRepository;
@@ -43,7 +45,7 @@ public class BiciImpl implements IBiciService{
         bici.setNumeroMarce(biciReq.getNumeroMarce());
         bici.setPieghevole(biciReq.getPieghevole());
         bici.setTipoFreno(biciReq.getTipoFreno());
-        //bici.setTipoSospensione(biciReq.getTipoSospensione());
+        bici.setTipoSospensione(biciReq.getTipoSospensione());
         bici.setVeicoli(veicolo);
 
         biciRepository.save(bici);
@@ -62,8 +64,7 @@ public class BiciImpl implements IBiciService{
         if (biciReq.getNumeroCorone() != null) bici.setNumeroCorone(biciReq.getNumeroCorone());
         if (biciReq.getNumeroMarce() != null) bici.setNumeroMarce(biciReq.getNumeroMarce());
         if (biciReq.getTipoFreno() != null) bici.setTipoFreno(biciReq.getTipoFreno());
-        //if (biciReq.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
-
+        if (biciReq.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
         if (biciReq.getIdVeicolo() != null) {
             Veicoli veicolo = veicoliRepository.findById(biciReq.getIdVeicolo())
                     .orElseThrow(() -> new VeicoloException(notificaService.get("bici-fnd")));
@@ -87,6 +88,17 @@ public class BiciImpl implements IBiciService{
 	public List<BiciRes> listBici() throws Exception {
 		List<Bici> listBici = biciRepository.findAll();
 		return BiciMap.buildBiciResList(listBici);		
+	}
+	
+	@Transactional
+	@Override
+	public BiciRes findById(Integer biciID) throws Exception {
+		log.debug("findById () - id: {}", biciID);
+		
+		Bici bici = biciRepository.findById(biciID)
+				.orElseThrow(() -> new VeicoloException("bici-ntfnd"));
+		
+		return BiciMap.buildBiciRes(bici);
 	}
 
 }
