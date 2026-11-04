@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class TipoAlimentazioneReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id del tipo alimentazione")
+	@NotNull(groups = ValidationGroup.Update.class, message = "alim-id-ntfnd")
     private Integer id;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca il nome del tipo alimentazione")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "alim-name-ntfnd")
     private String nome;
 }

@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class TipoVeicoloReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id del tipo veicolo")
+	@NotNull(groups = ValidationGroup.Update.class, message = "tpveic-no-id")
     private Integer id;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca il nome del tipo veicolo")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "tpveic-ntfnd")
     private String nome;
 }

@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class ColoreReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id del colore")
+	@NotNull(groups = ValidationGroup.Update.class, message = "color-no-id")
     private Integer id;
 
-	@NotBlank(groups = ValidationGroup.Create.class, message = "Manca il colore")
+	@NotBlank(groups = ValidationGroup.Create.class, message = "color-no-name")
 	private String nome;
 }

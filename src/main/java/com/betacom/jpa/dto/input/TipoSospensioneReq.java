@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class TipoSospensioneReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id del tipo sospensione")
+	@NotNull(groups = ValidationGroup.Update.class, message = "sos-id-ntfnd")
     private Integer id;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca il nome del tipo sospensione")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "sosp-ntfnd")
     private String nome;
 }

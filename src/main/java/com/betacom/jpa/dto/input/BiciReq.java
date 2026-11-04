@@ -17,7 +17,7 @@ public class BiciReq extends VeicoliReq{
 	@NotNull(groups = ValidationGroup.Update.class, message = "bici-no-id")
     private Integer id;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "veicolo-no-id")
+	@NotNull(groups = ValidationGroup.Create.class, message = "veic-no-id")
     private Integer idVeicolo;
 
 	@NotNull(groups = ValidationGroup.Create.class, message = "numc-ntfnd")
@@ -34,6 +34,6 @@ public class BiciReq extends VeicoliReq{
 	@NotBlank(groups = ValidationGroup.Create.class, message = "sosp-ntfnd")
     private TipoSospensione tipoSospensione;
 
-	@NotNull(groups = ValidationGroup.Create.class, message = "Manca il campo pieghevole")
+	@NotNull(groups = ValidationGroup.Create.class, message = "pg-ntfnd")
     private Boolean pieghevole;
 }

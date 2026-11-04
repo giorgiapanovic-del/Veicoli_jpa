@@ -12,16 +12,16 @@ import lombok.ToString;
 @ToString
 public class MotoReq extends VeicoliReq{
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id della moto")
+	@NotNull(groups = ValidationGroup.Update.class, message = "moto-id-ntfnd")
     private Integer id;
 
-    @NotNull(groups = ValidationGroup.Create.class, message = "Manca l'id veicolo")
+    @NotNull(groups = ValidationGroup.Create.class, message = "moto-idveic-ntfnd")
     private Integer idVeicolo;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca la targa")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "moto-trg-ntfnd")
     private String targa;
 
-    @NotNull(groups = ValidationGroup.Create.class, message = "Manca il valore dei cc")
-    @Positive(message = "Valore non valido di cc")
+    @NotNull(groups = ValidationGroup.Create.class, message = "cc-ntfnd")
+    @Positive(message = "cc-invalid")
     private Integer cc;
 }

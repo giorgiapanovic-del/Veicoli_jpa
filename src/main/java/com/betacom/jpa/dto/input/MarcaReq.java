@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString
 public class MarcaReq {
 
-	@NotNull(groups = ValidationGroup.Update.class, message = "Manca l'id della marca")
+	@NotNull(groups = ValidationGroup.Update.class, message = "marca-id-ntfnd")
     private Integer id;
 
-    @NotBlank(groups = ValidationGroup.Create.class, message = "Manca la marca")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "marca-ntfnd")
     private String nome;
 
 }
