@@ -7,9 +7,9 @@ import com.betacom.jpa.exception.VeicoloException;
 
 public interface IMacchinaService {
 	
-    List<MacchinaRes> getAllMacchine();
-    MacchinaRes getMacchinaById(Integer id) throws VeicoloException;
-    void createMacchina(MacchinaReq request) throws VeicoloException;
-    void updateMacchina(MacchinaReq request) throws VeicoloException;
-    void deleteMacchina(Integer id) throws VeicoloException;
+    List<MacchinaRes> listMacchina() throws Exception;
+    MacchinaRes getMacchinaById(Integer id) throws Exception;
+    void createMacchina(MacchinaReq request) throws Exception;
+    void updateMacchina(MacchinaReq request) throws Exception;
+    void deleteMacchina(Integer id) throws Exception;
 }

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dto.input.MotoReq;
 import com.betacom.jpa.dto.output.MotoRes;
+import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
 import com.betacom.jpa.mapper.MotoMap;
+import com.betacom.jpa.mapper.VeicoliMap;
 import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
@@ -79,6 +81,17 @@ public class MotoImpl implements IMotoService{
 	public List<MotoRes> listMoto() throws Exception {
 		List<Moto> listMoto = motoRepository.findAll();
 		return MotoMap.buildMotoResList(listMoto);
+	}
+	
+	@Transactional
+	@Override
+	public MotoRes findById(Integer motoID) throws Exception {
+		log.debug("findById () - id: {}", motoID);
+		
+		Moto moto = motoRepository.findById(motoID)
+				.orElseThrow(() -> new VeicoloException("moto-ntfnd"));
+		
+		return MotoMap.buildMotoRes(moto);
 	}
 
 }

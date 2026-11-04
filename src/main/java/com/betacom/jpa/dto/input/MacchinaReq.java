@@ -2,6 +2,7 @@ package com.betacom.jpa.dto.input;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,17 +10,20 @@ import lombok.Setter;
 @Setter
 public class MacchinaReq {
     
+	@NotNull(groups = ValidationGroup.Update.class, message = "Manca id macchina")
     private Integer id;
 
-    @NotNull(message = "L'ID del veicolo è obbligatorio")
+    @NotNull(groups = ValidationGroup.Create.class, message = "Manca id veicolo")
     private Integer idVeicoli;
 
-    @NotBlank(message = "La targa non può essere vuota o null")
+    @NotBlank(groups = ValidationGroup.Create.class, message = "La targa è obbligatoria")
     private String targa;
 
-    @NotNull(message = "La cilindrata (cc) è obbligatoria")
+    @NotNull(groups = ValidationGroup.Create.class, message = "Manca la cilindrata")
+    @Positive(message = "La cilindrata non è valida")
     private Integer cc;
 
-    @NotNull(message = "Il numero di porte è obbligatorio")
+    @NotNull(groups = ValidationGroup.Create.class, message = "Manca il numero di porte")
+    @Positive(message = "Il numero di porte non è valido")
     private Integer numeroPorte;
 }

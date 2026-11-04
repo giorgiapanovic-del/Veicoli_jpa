@@ -2,9 +2,7 @@ package com.betacom.jpa.mapper;
 
 import java.util.List;
 
-import com.betacom.jpa.dto.output.BiciRes;
 import com.betacom.jpa.dto.output.MotoRes;
-import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Moto;
 
 public class MotoMap {
