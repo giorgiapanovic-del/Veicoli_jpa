@@ -2,20 +2,15 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dto.input.MotoReq;
 import com.betacom.jpa.dto.output.MotoRes;
-import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
-import com.betacom.jpa.mapper.MacchinaMap;
 import com.betacom.jpa.mapper.MotoMap;
-import com.betacom.jpa.mapper.VeicoliMap;
-import com.betacom.jpa.models.Bici;
-import com.betacom.jpa.models.Macchina;
 import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
-import com.betacom.jpa.repositories.IBiciRepository;
 import com.betacom.jpa.repositories.IMotoRepository;
 import com.betacom.jpa.repositories.IVeicoliRepository;
 import com.betacom.jpa.services.interfaces.IMotoService;
@@ -30,9 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MotoImpl implements IMotoService{
 	
+	@Autowired
 	private final IMotoRepository motoRepository;
+	@Autowired
 	private final INotificaService notificaService;
-	private IVeicoliRepository veicoliRepository;
+	@Autowired
+	private final IVeicoliRepository veicoliRepository;
 	 
 	@Transactional
 	@Override
@@ -40,7 +38,7 @@ public class MotoImpl implements IMotoService{
 		log.debug("create ()", motoReq);
 
 		Veicoli veicolo = veicoliRepository.findById(motoReq.getIdVeicolo())
-              .orElseThrow(() -> new VeicoloException(notificaService.get("moto-fnd")));
+              .orElseThrow(() -> new VeicoloException(notificaService.get("moto-ntfnd")));
 		Moto moto = new Moto();		
 		moto.setCc(motoReq.getCc());
 		moto.setTarga(motoReq.getTarga());
@@ -61,7 +59,7 @@ public class MotoImpl implements IMotoService{
         if (motoReq.getTarga() != null) moto.setTarga(motoReq.getTarga());
         if (motoReq.getIdVeicolo() != null) {
             Veicoli veicolo = veicoliRepository.findById(motoReq.getIdVeicolo())
-                    .orElseThrow(() -> new VeicoloException(notificaService.get("moto-fnd")));
+                    .orElseThrow(() -> new VeicoloException(notificaService.get("moto-ntfnd")));
             moto.setVeicoli(veicolo);
         }
         motoRepository.save(moto);
@@ -72,7 +70,7 @@ public class MotoImpl implements IMotoService{
 	public void deleteMoto(Integer motoID) throws Exception {
 		log.debug("delete {}", motoID);
 		Moto moto = motoRepository.findById(motoID)
-				.orElseThrow(() -> new VeicoloException("moto-ntfnd"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("moto-ntfnd")));
 		
 		motoRepository.delete(moto);
 		

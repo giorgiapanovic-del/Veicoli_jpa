@@ -2,6 +2,7 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dto.input.CategoriaReq;
@@ -11,6 +12,7 @@ import com.betacom.jpa.mapper.CategoriaMap;
 import com.betacom.jpa.models.Categoria;
 import com.betacom.jpa.repositories.ICategoriaRepository;
 import com.betacom.jpa.services.interfaces.ICategoriaService;
+import com.betacom.jpa.services.interfaces.INotificaService;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class CategoriaImpl implements ICategoriaService{
+	@Autowired
 	private final ICategoriaRepository catR;
+	@Autowired
+	private INotificaService notificaService;
 	
 	@Transactional
 	@Override
@@ -39,9 +44,9 @@ public class CategoriaImpl implements ICategoriaService{
 	public void deleteCategoria(Integer id) throws Exception {
 		log.debug("delete {}", id);
 		Categoria cat = catR.findById(id)
-				.orElseThrow(() -> new VeicoloException("key_ntfnd"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("cat-id-ntfnd")));
 		if (!cat.getVeicoli().isEmpty())
-			new VeicoloException("key_inuse");
+			new VeicoloException(notificaService.get("cat-id-inuse"));
 		catR.delete(cat);
 	}
 

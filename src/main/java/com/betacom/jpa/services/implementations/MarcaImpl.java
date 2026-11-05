@@ -1,13 +1,19 @@
 package com.betacom.jpa.services.implementations;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.betacom.jpa.dto.input.MarcaReq;
 import com.betacom.jpa.dto.output.MarcaRes;
 import com.betacom.jpa.exception.VeicoloException;
 import com.betacom.jpa.mapper.MarcaMap;
 import com.betacom.jpa.models.Marca;
 import com.betacom.jpa.repositories.IMarcaRepository;
+import com.betacom.jpa.services.interfaces.IMarcaService;
+import com.betacom.jpa.services.interfaces.INotificaService;
+
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class MarcaImpl {
+public class MarcaImpl implements IMarcaService{
 
+	@Autowired
 	private final IMarcaRepository marcaR;
+	@Autowired
+	private INotificaService notificaService;
 	
 	@Transactional
 	public void createMarca(MarcaReq req) throws Exception {
@@ -34,9 +43,9 @@ public class MarcaImpl {
 	public void deleteMarca(Integer id) throws Exception {
 		log.debug("delete {}", id);
 		Marca marca = marcaR.findById(id)
-				.orElseThrow(() -> new VeicoloException("key_ntfnd"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("marca-id-ntfnd")));
 		if (!marca.getVeicoli().isEmpty())
-			new VeicoloException("key_inuse");
+			new VeicoloException(notificaService.get("marca-id-inuse"));
 		marcaR.delete(marca);
 	}
 

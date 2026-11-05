@@ -2,14 +2,13 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.betacom.jpa.dto.input.MacchinaReq;
 import com.betacom.jpa.dto.output.MacchinaRes;
 import com.betacom.jpa.exception.VeicoloException;
-import com.betacom.jpa.mapper.BiciMap;
 import com.betacom.jpa.mapper.MacchinaMap;
-import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Macchina;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IMacchinaRepository;
@@ -26,8 +25,11 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MacchinaImpl implements IMacchinaService {
 
+	@Autowired
     private final IMacchinaRepository macchinaRepository;
+	@Autowired
     private final IVeicoliRepository veicoliRepository;
+	@Autowired
     private final INotificaService notificaService;
 
     @Transactional
@@ -37,7 +39,7 @@ public class MacchinaImpl implements IMacchinaService {
         log.debug("create {}", macchinaReq);
 
         Veicoli veicolo = veicoliRepository.findById(macchinaReq.getIdVeicoli())
-                .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-fnd")));
+                .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
 
         Macchina macchina = new Macchina();
 
@@ -64,7 +66,7 @@ public class MacchinaImpl implements IMacchinaService {
 
         if (macchinaReq.getIdVeicoli() != null) {
             Veicoli veicolo = veicoliRepository.findById(macchinaReq.getIdVeicoli())
-                    .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-fnd")));
+                    .orElseThrow(() -> new VeicoloException(notificaService.get("macchina-ntfnd")));
 
             macchina.setVeicoli(veicolo);
         }

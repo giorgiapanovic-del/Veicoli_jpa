@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 import com.betacom.jpa.dto.input.VeicoliReq;
 import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
-import com.betacom.jpa.mapper.MotoMap;
 import com.betacom.jpa.mapper.VeicoliMap;
-import com.betacom.jpa.models.Moto;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.ICategoriaRepository;
 import com.betacom.jpa.repositories.IColoreRepository;
@@ -18,6 +16,7 @@ import com.betacom.jpa.repositories.IMarcaRepository;
 import com.betacom.jpa.repositories.ITipoAlimentazioneRepository;
 import com.betacom.jpa.repositories.ITipoVeicoloRepository;
 import com.betacom.jpa.repositories.IVeicoliRepository;
+import com.betacom.jpa.services.interfaces.INotificaService;
 import com.betacom.jpa.services.interfaces.IVeicoliService;
 
 import jakarta.transaction.Transactional;
@@ -46,7 +45,10 @@ public class VeicoliImpl implements IVeicoliService {
 	
 	@Autowired
 	private IMarcaRepository marcaRepository;
-
+	
+	@Autowired
+	private INotificaService notificaService;
+	
 	@Transactional
 	@Override
 	public void createVeicoli(VeicoliReq veicoliReq) throws Exception {
@@ -59,23 +61,23 @@ public class VeicoliImpl implements IVeicoliService {
 		
 		if (veicoliReq.getIdTipoVeicolo() != null) {
 			veicolo.setTipoVeicolo(tipoVeicoloRepository.findById(veicoliReq.getIdTipoVeicolo())
-					.orElseThrow(() -> new VeicoloException("tipo-veicolo-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("veic-ntfnd"))));
 		}
 		if (veicoliReq.getIdTipoAlimentazione() != null) {
 			veicolo.setTipoAlimentazione(tipoAlimentazioneRepository.findById(veicoliReq.getIdTipoAlimentazione())
-					.orElseThrow(() -> new VeicoloException("tipo-alimentazione-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("alim-ntfnd"))));
 		}
 		if (veicoliReq.getIdCategoria() != null) {
 			veicolo.setCategoria(categoriaRepository.findById(veicoliReq.getIdCategoria())
-					.orElseThrow(() -> new VeicoloException("categoria-non-trovata")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("cat-ntfnd"))));
 		}
 		if (veicoliReq.getIdColore() != null) {
 			veicolo.setColore(coloreRepository.findById(veicoliReq.getIdColore())
-					.orElseThrow(() -> new VeicoloException("colore-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("col-ntfnd"))));
 		}
 		if (veicoliReq.getIdMarca() != null) {
 			veicolo.setMarca(marcaRepository.findById(veicoliReq.getIdMarca())
-					.orElseThrow(() -> new VeicoloException("marca-non-trovata")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("marca-ntfnd"))));
 		}
 		
 		veicoliRepository.save(veicolo);
@@ -87,7 +89,7 @@ public class VeicoliImpl implements IVeicoliService {
 		log.debug("updateVeicoli () - {}", veicoliReq);
 		
 		Veicoli veicolo = veicoliRepository.findById(veicoliReq.getId())
-				.orElseThrow(() -> new VeicoloException("veicolo-non-trovato"));			
+				.orElseThrow(() -> new VeicoloException(notificaService.get("veic-ntfnd")));			
 		
 		if (veicoliReq.getNumeroRuote() != null) veicolo.setNumeroRuote(veicoliReq.getNumeroRuote());
 		if (veicoliReq.getAnnoProduzione() != null) veicolo.setAnnoProduzione(veicoliReq.getAnnoProduzione());
@@ -95,23 +97,23 @@ public class VeicoliImpl implements IVeicoliService {
 		
 		if (veicoliReq.getIdTipoVeicolo() != null) {
 			veicolo.setTipoVeicolo(tipoVeicoloRepository.findById(veicoliReq.getIdTipoVeicolo())
-					.orElseThrow(() -> new VeicoloException("tipo-veicolo-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("tp-id-ntfnd"))));
 		}
 		if (veicoliReq.getIdTipoAlimentazione() != null) {
 			veicolo.setTipoAlimentazione(tipoAlimentazioneRepository.findById(veicoliReq.getIdTipoAlimentazione())
-					.orElseThrow(() -> new VeicoloException("tipo-alimentazione-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("alim-ntfnd"))));
 		}
 		if (veicoliReq.getIdCategoria() != null) {
 			veicolo.setCategoria(categoriaRepository.findById(veicoliReq.getIdCategoria())
-					.orElseThrow(() -> new VeicoloException("categoria-non-trovata")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("cat-ntfnd"))));
 		}
 		if (veicoliReq.getIdColore() != null) {
 			veicolo.setColore(coloreRepository.findById(veicoliReq.getIdColore())
-					.orElseThrow(() -> new VeicoloException("colore-non-trovato")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("col-ntfnd"))));
 		}
 		if (veicoliReq.getIdMarca() != null) {
 			veicolo.setMarca(marcaRepository.findById(veicoliReq.getIdMarca())
-					.orElseThrow(() -> new VeicoloException("marca-non-trovata")));
+					.orElseThrow(() -> new VeicoloException(notificaService.get("marca-ntfnd"))));
 		}
 		
 		veicoliRepository.save(veicolo);
@@ -123,7 +125,7 @@ public class VeicoliImpl implements IVeicoliService {
 		log.debug("deleteVeicoli () - id: {}", veicoloID);
 		
 		Veicoli veicolo = veicoliRepository.findById(veicoloID)
-				.orElseThrow(() -> new VeicoloException("veicolo-non-trovato"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("veic-ntfnd")));
 		
 		veicoliRepository.delete(veicolo);
 	}
@@ -143,7 +145,7 @@ public class VeicoliImpl implements IVeicoliService {
 		log.debug("findById () - id: {}", id);
 		
 		Veicoli veicolo = veicoliRepository.findById(id)
-				.orElseThrow(() -> new VeicoloException("veicolo-non-trovato"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("veic-ntfnd")));
 		
 		return VeicoliMap.buildVeicoliRes(veicolo);
 	}

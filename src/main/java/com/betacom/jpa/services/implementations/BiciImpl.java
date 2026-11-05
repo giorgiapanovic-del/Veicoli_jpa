@@ -2,15 +2,14 @@ package com.betacom.jpa.services.implementations;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.betacom.jpa.dto.input.BiciReq;
 import com.betacom.jpa.dto.output.BiciRes;
-import com.betacom.jpa.dto.output.VeicoliRes;
 import com.betacom.jpa.exception.VeicoloException;
 import com.betacom.jpa.mapper.BiciMap;
-import com.betacom.jpa.mapper.VeicoliMap;
 import com.betacom.jpa.models.Bici;
 import com.betacom.jpa.models.Veicoli;
 import com.betacom.jpa.repositories.IBiciRepository;
@@ -26,9 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class BiciImpl implements IBiciService{
 	
+	@Autowired
 	private final IBiciRepository biciRepository;
+	@Autowired
 	private final INotificaService notificaService;
-	private IVeicoliRepository veicoliRepository;
+	@Autowired
+	private final IVeicoliRepository veicoliRepository;
 	
 	@Transactional
     @Override
@@ -37,7 +39,7 @@ public class BiciImpl implements IBiciService{
         log.debug("create {}", biciReq);
 
         Veicoli veicolo = veicoliRepository.findById(biciReq.getIdVeicolo())
-                .orElseThrow(() -> new VeicoloException(notificaService.get("bici-fnd")));
+                .orElseThrow(() -> new VeicoloException(notificaService.get("bici-ntfnd")));
 
         Bici bici = new Bici();
 
@@ -67,7 +69,7 @@ public class BiciImpl implements IBiciService{
         if (biciReq.getTipoSospensione() != null) bici.setTipoSospensione(biciReq.getTipoSospensione());
         if (biciReq.getIdVeicolo() != null) {
             Veicoli veicolo = veicoliRepository.findById(biciReq.getIdVeicolo())
-                    .orElseThrow(() -> new VeicoloException(notificaService.get("bici-fnd")));
+                    .orElseThrow(() -> new VeicoloException(notificaService.get("bici-ntfnd")));
             bici.setVeicoli(veicolo);
         }
         biciRepository.save(bici);
@@ -78,7 +80,7 @@ public class BiciImpl implements IBiciService{
 	public void deleteBici(Integer biciID) throws Exception {
 		log.debug("delete {}", biciID);
 		Bici bici = biciRepository.findById(biciID)
-				.orElseThrow(() -> new VeicoloException("bici-ntfnd"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("bici-ntfnd")));
 		
 		biciRepository.delete(bici);
 		
@@ -96,7 +98,7 @@ public class BiciImpl implements IBiciService{
 		log.debug("findById () - id: {}", biciID);
 		
 		Bici bici = biciRepository.findById(biciID)
-				.orElseThrow(() -> new VeicoloException("bici-ntfnd"));
+				.orElseThrow(() -> new VeicoloException(notificaService.get("bici-ntfnd")));
 		
 		return BiciMap.buildBiciRes(bici);
 	}
